@@ -12,23 +12,15 @@ function solveEquation(a, b, c) {
 }
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
-//  if (((percent > '!') === true) && ((percent > 'a') === false)) {
-//    percent = +percent;
-    if (typeof percent !== 'number') {
-      return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
-//    }
-  }
-//  if (((contribution > '!') === true) && ((contribution > 'a') === false)) {
-//    contribution = +contribution;
-    if (typeof contribution !== 'number') {
-      return `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
-//    }
-  }
-//  if (((amount > '!') === true) && ((amount > 'a') === false)) {
-//    amount = +amount;
-    if (typeof amount !== 'number') {
-      return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
-//    }
+  parseInt(percent);
+  parseInt(contribution);
+  parseInt(amount);
+  if (isNaN(percent)) {
+    return `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`
+  } else if (isNaN(contribution)) {
+    return `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`
+  } else if (isNaN(amount)) {
+    return `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`
   }
 
   let totalAmount;
