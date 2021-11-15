@@ -33,13 +33,13 @@ function worker(arr) {
 
 function makeWork(arrOfArr, func) {
   let max = -Infinity;
-
+  let res;
   for (n = 0; n < arrOfArr.length; n++) {
-    if (func(arrOfArr[n]) > max) {
-      max = func(arrOfArr[n]);
+    res = func(arrOfArr[n]);
+    if (res > max) {
+      max = res;
     }
   }
-
   return max;
 }
 
