@@ -18,21 +18,18 @@ function validateCount(some) {
 
 class Triangle {
     constructor(a, b, c) {
-        if (a >= b +c) {
+        if (a >= b + c) {
             throw new Error("Треугольник с такими сторонами не существует");
-        } else {
-            this.a = a;
         }
+        this.a = a;
         if (b >= a + c) {
             throw new Error("Треугольник с такими сторонами не существует");
-        } else {
-            this.b = b;
         }
+        this.b = b;
         if (c >= a + b) {
             throw new Error("Треугольник с такими сторонами не существует");
-        } else {
-            this.c = c;
         }
+        this.c = c;
     }
 
     getPerimeter() {
