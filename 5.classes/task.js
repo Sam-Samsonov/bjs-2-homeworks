@@ -98,26 +98,46 @@ class Library {
 }
 
 class Student {
-    constructor(name, gender, age) {
-        this.name = name,
-        this.gender = gender,
-        this.age = age;
-    }
+  constructor(name, gender, age) {
+      this.name = name;
+      this.gender = gender;
+      this.age = age;
+      this.subjects = {};
+  }
 
 
-    setSubject(subject) {
-         this[subject] = [];
-    }
+  setSubject(subject) {
+      return this.subjects[subject] = [];
+  }
 
-    addMark(mark, subject) {
-        if ((this[subject] === undefined) && (mark > 0) && (mark < 6)){
-             this[subject] = [mark];
-        } else if ((mark > 0) && (mark < 6)){
-             this[subject].push(mark);
-        } else {
-             "Ошибка, оценка должна быть числом от 1 до 5";
-        }
+  addMark(mark, subject) {
+      if ((this.subjects[subject] === undefined) && (mark > 0) && (mark < 6)) {
+           return this.subjects[subject] = [mark];
+      } else if ((mark > 0) && (mark < 6)){
+           return this.subjects[subject].push(mark);
+      } else {
+           "Ошибка, оценка должна быть числом от 1 до 5";
+      }
+  }
+
+  getAverageBySubject(subject) {
+      return this.subjects[subject].reduce((sum, elem) => sum + elem) / this.subjects[subject].length;
+  }
+
+  getAverage() {
+    let sum = [];
+    for (let prop in this.subjects) {
+      let value = this.subjects[prop];
+      sum = sum.concat(value);
     }
+    return sum.reduce((sum, elem) => sum + elem) / sum.length;
+}
+
+  exclude(reason) {
+      delete this.subject;
+      this.excluded = reason;
+  }
+}
 
     /*addMarks() {
         if (this.marks === undefined) {
@@ -126,13 +146,3 @@ class Student {
             (Array.from(arguments)).forEach(elem => this.marks.push(elem));
         }
     }*/
-
-    getAverageBySubject(subject) {
-         this[subject].reduce((sum, elem) => sum + elem) / this[subject].length;
-    }
-
-    exclude(reason) {
-        delete this.subject;
-        this.excluded = reason;
-        }
-    }
