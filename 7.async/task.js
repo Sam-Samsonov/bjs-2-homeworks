@@ -23,34 +23,32 @@ class AlarmClock {
         }
     }
 
-    getCurrentFormattedTime(n) {
-        let currentDate = new Date;
-        let hours;
-        let minutes;
-        if (currentDate.getHours() < 10) {
-            hours = '0' + currentDate.getHours();
-        } else {
-            hours = currentDate.getHours();
-        }
-
-        if (currentDate.getMinutes() < 10) {
-            minutes = '0' + currentDate.getMinutes() + n;
-        } else {
-            minutes = currentDate.getMinutes()
-        }
-
-        return hours + ':' + minutes;
+    getCurrentFormattedTime() {
+        return new Date().toLocaleTimeString("ru-Ru", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
     }
 
-    start(timerTime) {
-      this.alarmCollection.forEach(elem => this.checkClock(elem.time, elem.callback));
+    getCurrentFormattedTimeMod(n) {
+        return new Date(new Date().setMinutes(new Date().getMinutes() + n)).toLocaleTimeString("ru-Ru", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
     }
 
-    checkClock(time, callback, timerTime) {
+    start() {
+        if (this.timerId === null) {
+            this.timerId = setInterval(() => {
+                this.alarmCollection.forEach(elem => this.checkClock(elem.time, elem.callback));
+            }, 30000);
+            setInterval(this.timerId);
+        }
+    }
+
+    checkClock(time, callback) {
         if (this.getCurrentFormattedTime() === time) {
             return callback();
-        } if (this.timerId == null) {
-            this.timerId = setInterval(callback, timerTime);
         }
     }
 
@@ -70,11 +68,10 @@ class AlarmClock {
       this.alarmCollection.splice(0, this.alarmCollection.length);
     }
 }
-let testCase = function() {
-  let alarm = new AlarmClock;
-  alarm.addClock(alarm.getCurrentFormattedTime(0), () => console.log('что то'), 1);
-  alarm.addClock(alarm.getCurrentFormattedTime(1), function() {console.log('ещё что то'); alarm.removeClock(2)}, 2);
-  alarm.addClock(alarm.getCurrentFormattedTime(2), function() {console.log('и ещё что то'); alarm.printAlarms(); alarm.clearAlarms()}, 3);
-  alarm.start(60000);
-}
-console.log(testCase());
+let alarm = new AlarmClock;
+
+  alarm.addClock(alarm.getCurrentFormattedTime(), () => console.log('что то'), 1);
+  alarm.addClock(alarm.getCurrentFormattedTimeMod(1), function() {console.log('ещё что то'); alarm.removeClock(2)}, 2);
+  alarm.addClock(alarm.getCurrentFormattedTimeMod(2), function() {console.log('и ещё что то'); alarm.printAlarms(); alarm.clearAlarms()}, 3);
+  alarm.start();
+
