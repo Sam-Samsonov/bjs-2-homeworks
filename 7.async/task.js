@@ -23,14 +23,14 @@ class AlarmClock {
         }
     }
 
-    getCurrentFormattedTime() {
+/*    getCurrentFormattedTime() {
         return new Date().toLocaleTimeString("ru-Ru", {
             hour: "2-digit",
             minute: "2-digit",
           });
-    }
+    }*/
 
-    getCurrentFormattedTimeMod(n) {
+    getCurrentFormattedTime(n = 0) {
         return new Date(new Date().setMinutes(new Date().getMinutes() + n)).toLocaleTimeString("ru-Ru", {
             hour: "2-digit",
             minute: "2-digit",
@@ -41,7 +41,7 @@ class AlarmClock {
         if (this.timerId === null) {
             this.timerId = setInterval(() => {
                 this.alarmCollection.forEach(elem => this.checkClock(elem.time, elem.callback));
-            }, 30000);
+            }, 10000);
             setInterval(this.timerId);
         }
     }
@@ -71,7 +71,7 @@ class AlarmClock {
 let alarm = new AlarmClock;
 
   alarm.addClock(alarm.getCurrentFormattedTime(), () => console.log('что то'), 1);
-  alarm.addClock(alarm.getCurrentFormattedTimeMod(1), function() {console.log('ещё что то'); alarm.removeClock(2)}, 2);
-  alarm.addClock(alarm.getCurrentFormattedTimeMod(2), function() {console.log('и ещё что то'); alarm.printAlarms(); alarm.clearAlarms()}, 3);
+  alarm.addClock(alarm.getCurrentFormattedTime(1), function() {console.log('ещё что то'); alarm.removeClock(2)}, 2);
+  alarm.addClock(alarm.getCurrentFormattedTime(2), function() {console.log('и ещё что то'); alarm.printAlarms(); alarm.clearAlarms()}, 3);
   alarm.start();
 
